@@ -2,9 +2,9 @@ import { Veterinaria } from "./veterinaria";
 
 export class Proveedor extends Veterinaria {
 
-    constructor(nombre: string, telefono: number) {
-        super(nombre, telefono)
-        this.id = this.crearId();
+    constructor(nombre: string, direccion:string, telefono: number) {
+        super(nombre, direccion, telefono)
+        // this.id = this.crearId();
     }
     // Getters
     public getTelefono(): number {

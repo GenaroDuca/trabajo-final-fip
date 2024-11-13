@@ -4,9 +4,9 @@ export class Paciente extends Veterinaria {
     private especie: string;
 
     constructor(nombre: string, especie: string) {
-        super(nombre);
+        super(nombre)
         this.especie = especie;
-        this.id = this.crearId();
+        // this.id = this.crearId();
     }
 
     // Getters
