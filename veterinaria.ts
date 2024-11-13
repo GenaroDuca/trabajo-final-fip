@@ -1,16 +1,15 @@
 import { RedVeterinarias } from "./redVeterinarias";
 
-export class Veterinaria extends RedVeterinarias {
+export class Veterinaria {
     protected nombre: string;
-    private direccion: string;
-    protected id: number;
+    protected direccion: string;
+    // protected id: number;
     protected telefono: number;
 
-    constructor(nombre: string, telefono?: number, direccion?: string) {
-        super()
+    constructor(nombre: string, direccion?: string, telefono?: number) {
         this.nombre = nombre;
         this.direccion = direccion;
-        this.id = this.crearId();
+        // this.id = this.crearId();
         this.telefono = telefono;
     }
 
@@ -23,6 +22,9 @@ export class Veterinaria extends RedVeterinarias {
         return this.direccion;
     }
 
+    public getTelefono (): number {
+        return this.telefono;
+    }
     // Setters
     public setNombre(nombre: string): void {
         this.nombre = nombre;
@@ -32,10 +34,11 @@ export class Veterinaria extends RedVeterinarias {
         this.direccion = direccion;
     }
 
-    // Métodos 
-    public crearId(): any {
-        this.id = Math.floor(Math.random() *1000);
-        this.identificadores.push (this.id)
-        return this.id;
-    }
+    // // Métodos 
+    
+    // public crearId(): any {
+    //     this.id = Math.floor(Math.random() *1000);
+    //     this.identificadores.push (this.id)
+    //     return this.id;
+    // }
 }
