@@ -4,8 +4,7 @@ export class Proveedor extends EntidadBase {
     private telefono: number;
 
     constructor(nombre: string, telefono: number) {
-        super(nombre);
-        this.id = this.generateId();
+        super(nombre.toLowerCase());
         this.telefono = telefono;
     }
 

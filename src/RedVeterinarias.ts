@@ -5,10 +5,10 @@ import { Veterinaria } from './Veterinaria';
 import * as readlineSync from 'readline-sync';
 
 export class redVeterinarias {
-  private veterinarias: Veterinaria[] = [];
-  private clientes: Cliente[] = [];
-  private pacientes: Paciente[] = [];
-  private proveedores: Proveedor[] = [];
+  protected veterinarias: Veterinaria[] = [];
+  protected clientes: Cliente[] = [];
+  protected pacientes: Paciente[] = [];
+  protected proveedores: Proveedor[] = [];
 
   constructor() { }
 
@@ -61,7 +61,7 @@ export class redVeterinarias {
     const telefono = readlineSync.questionInt(`Telefono: `);
     const cliente: Cliente = new Cliente(nombre, telefono);
     this.clientes.push(cliente);
-    console.log(`¡Cliente ${cliente.getId()} agregado con exito, su ID es: ${cliente.getId()}!`);
+    console.log(`¡Cliente ${cliente.getNombre()} agregado con exito, su ID es: ${cliente.getId()}!`);
   }
 
   public modificarCliente(): void {
@@ -79,8 +79,8 @@ export class redVeterinarias {
   }
 
   public eliminarCliente(): void {
-    const id = readlineSync.questionInt(`ID de la veterinaria que deseas eliminar (Opcion 4 -> Mostrar Veterinarias): `)
-    const cliente = this.veterinarias.find(cliente => cliente.getId() === id);
+    const id = readlineSync.questionInt(`ID del cliente que deseas eliminar (Opcion 4 -> Mostrar Clientes): `)
+    const cliente = this.clientes.find(cliente => cliente.getId() === id);
     if (!cliente) {
       console.log(`¡ID no encontrada!`);
       return;
@@ -120,13 +120,27 @@ export class redVeterinarias {
       return;
     }
 
-    const paciente = this.pacientes.find(paciente => paciente.getId() === idDuenio);
+    const pacientesDuenio = this.pacientes.filter(paciente => paciente.getId() === idDuenio);
+    if (pacientesDuenio.length === 0) {
+      console.log(`El dueño no tiene pacientes registrados.`);
+      return;
+    }
+
+    console.log(`Pacientes del dueño (ID: ${idDuenio}):`);
+    pacientesDuenio.forEach(paciente => console.log(`ID: ${paciente.getId()} - Nombre: ${paciente.getNombre()}`));
+
+    const nombrePaciente = readlineSync.question(`Nombre del paciente a modificar: `); 
+    const paciente = pacientesDuenio.find(paciente => paciente.getNombre() === nombrePaciente.toLowerCase()); 
+    if (!paciente) { 
+      console.log(`¡Nombre del paciente no encontrado!`); 
+      return; 
+    }
 
     const nuevoNombre = readlineSync.question(`Nuevo nombre: `);
     const nuevaEspecie = readlineSync.question(`Nueva Especie: `);
     paciente.setNombre(nuevoNombre);
     paciente.setEspecie(nuevaEspecie);
-    console.log(`¡Paciente ${paciente.getNombre()},${paciente.getEspecie()}, ID: ${duenio.getId()} modificado con exito!`);
+    console.log(`¡Paciente ${paciente.getNombre()}, ${paciente.getEspecie()}, ID: ${paciente.getId()} modificado con exito!`);
   }
 
   public eliminarPaciente(): void {
@@ -137,14 +151,28 @@ export class redVeterinarias {
       return;
     }
 
-    const paciente = this.pacientes.find(paciente => paciente.getId() === idDuenio);
+    const pacientesDuenio = this.pacientes.filter(paciente => paciente.getId() === idDuenio);
+    if (pacientesDuenio.length === 0) {
+      console.log(`El dueño no tiene pacientes registrados.`);
+      return;
+    }
 
-    this.pacientes = this.pacientes.filter(paciente => paciente.getId() !== idDuenio);
+    console.log(`Pacientes del dueño (ID: ${idDuenio}):`);
+    pacientesDuenio.forEach(paciente => console.log(`ID: ${paciente.getId()} - Nombre: ${paciente.getNombre()}`));
+
+    const nombrePaciente = readlineSync.question(`Nombre del paciente a eliminar: `); 
+    const paciente = pacientesDuenio.find(paciente => paciente.getNombre() === nombrePaciente.toLowerCase()); 
+    if (!paciente) { 
+      console.log(`¡Nombre del paciente no encontrado!`); 
+      return; 
+    }
+
+    this.pacientes = this.pacientes.filter(paciente => paciente.getNombre() !== nombrePaciente);
     console.log(`¡Paciente ${paciente.getNombre()}, ${paciente.getEspecie()}, ID: ${paciente.getId()} eliminada con éxito!`);
   }
 
   public mostrarPacientes(): void {
-    console.log(this.pacientes)
+    console.log(this.pacientes);
     return;
   }
 

@@ -1,12 +1,13 @@
-import { Entidad } from "./Entidad";
+import { GeneradorId } from "./GeneradorId";
 
-export abstract class EntidadBase implements Entidad {
+export abstract class EntidadBase extends GeneradorId {
     id: number;
     nombre: string;
 
     constructor(nombre: string) {
+        super ()
         this.nombre = nombre;
-        this.id = this.generateId();
+        this.id = GeneradorId.generarId()
     }
 
     public getId(): number {
@@ -19,10 +20,5 @@ export abstract class EntidadBase implements Entidad {
 
     public setNombre (nombre: string) : void {
         this.nombre = nombre;
-    }
-
-    public generateId(): number {
-        let id = Math.floor(Math.random() * 1000000);
-        return id;
     }
 }
