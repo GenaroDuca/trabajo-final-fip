@@ -1,8 +1,8 @@
 import { GeneradorId } from "./GeneradorId";
 
-export abstract class EntidadBase extends GeneradorId {
-    id: number;
-    nombre: string;
+export class EntidadBase extends GeneradorId {
+    protected id: number;
+    protected nombre: string;
 
     constructor(nombre: string) {
         super ()
