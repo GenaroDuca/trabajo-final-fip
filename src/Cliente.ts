@@ -6,12 +6,10 @@ export class Cliente extends EntidadBase {
     private isVIP: boolean;
 
     constructor(nombre: string, telefono: number) {
-        super(nombre);
+        super(nombre.toLowerCase());
         this.telefono = telefono;
         this.visitas = 0; 
         this.isVIP = false;
-        this.id = this.generateId();
-
     }
 
     public getTelefono(): number {

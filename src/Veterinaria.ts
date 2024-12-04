@@ -5,8 +5,7 @@ export class Veterinaria extends EntidadBase {
 
     constructor(nombre: string, direccion: string) {
         super(nombre);
-        this.direccion = direccion;
-        this.id = this.generateId();
+        this.direccion = direccion.toLowerCase();
     }
 
     public getDireccion() : string {
