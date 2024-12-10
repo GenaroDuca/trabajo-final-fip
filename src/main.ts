@@ -1,166 +1,201 @@
 import * as readlineSync from 'readline-sync';
 import { redVeterinarias } from './RedVeterinarias';
+import { Veterinaria } from './Veterinaria';
 
 const redVeterinaria: redVeterinarias = new redVeterinarias();
 
-let opcion: number;
-do {
-  console.log('\n=== MENU PRINCIPAL ===');
-  console.log('1. Gestionar Veterinarias');
-  console.log('2. Gestionar Clientes');
-  console.log('3. Gestionar Pacientes');
-  console.log('4. Gestionar Proveedores');
-  console.log('5. Salir');
+function mainMenu() {
+  let opcion: number;
+  do {
+    console.log('\n=== MENU PRINCIPAL ===');
+    console.log('1. Gestionar Veterinarias');
+    console.log('2. Agregar Veterinarias');
+    console.log('3. Eliminar Veterinarias');
+    console.log('4. Modificar Veterinarias');
+    console.log('5. Salir'); 3
 
-  opcion = readlineSync.questionInt('Seleccione una opcion: ');
-  switch (opcion) {
-    case 1:
-      let opcionUno: number;
-      do {
-        console.log('\n=== GESTIÓN DE VETERINARIAS ===');
-        console.log('1. Agregar Veterinaria');
-        console.log('2. Modificar Veterinaria');
-        console.log('3. Eliminar Veterinaria');
-        console.log('4. Mostrar Veterinarias');
-        console.log('5. Volver');
-        opcionUno = readlineSync.questionInt('Seleccione una opcion: ');
-        switch (opcionUno) {          
-          case 1:
-            redVeterinaria.agregarVeterinaria();
-            break;
+    opcion = readlineSync.questionInt('Seleccione una opcion: ');
 
-          case 2:
-            redVeterinaria.modificarVeterinaria()
-            break;
-
-          case 3:
-            redVeterinaria.eliminarVeterinaria();
-            break;
-
-          case 4:
-            redVeterinaria.mostrarVeterinarias()
-            break;
-
-          case 5:
-            console.log('Volviendo...');
-            break;
-
-          default:
-            console.log('Opción inválida. Por favor intente nuevamente.');
+    switch (opcion) {
+      case 1:
+        if (redVeterinaria.mostrarVeterinarias()) {
+          const idVeterinaria = readlineSync.questionInt("Seleccione una veterinaria con su ID: ");
+          const veterinariaGestionar = redVeterinaria.seleccionarVeterinaria(idVeterinaria);
+          if (veterinariaGestionar) {
+            gestionVeterinariaElegida(veterinariaGestionar)
+          }
         }
-      } while (opcionUno !== 5);
-      break;
-    case 2:
-      let opcionDos: number;
-      do {
-        console.log('\n=== GESTIÓN DE CLIENTES ===');
-        console.log('1. Agregar Cliente');
-        console.log('2. Modificar Cliente');
-        console.log('3. Eliminar Cliente');
-        console.log('4. Mostrar Clientes');
-        console.log('5. Volver');
-        opcionDos = readlineSync.questionInt('Seleccione una opcion: ');
-        switch (opcionDos) {
-          case 1:
-            redVeterinaria.agregarCliente();
-            break;
+        break;
+      case 2:
+        redVeterinaria.agregarVeterinaria();
+        break;
 
-          case 2:
-            redVeterinaria.modificarCliente()
-            break;
+      case 3:
+        redVeterinaria.eliminarVeterinaria();
+        break;
 
-          case 3:
-            redVeterinaria.eliminarCliente();
-            break;
+      case 4:
+        redVeterinaria.modificarVeterinaria()
+        break;
 
-          case 4:
-            redVeterinaria.mostrarClientes()
-            break;
+      case 5:
+        console.log('¡Hasta luego!');
+        break;
 
-          case 5:
-            console.log('Volviendo...');
-            break;
+      default:
+        console.log('Opción inválida. Por favor intente nuevamente.');
+        break;
+    }
+  } while (opcion !== 5);
+}
 
-          default:
-            console.log('Opción inválida. Por favor intente nuevamente.');
-        }
-      } while (opcionDos !== 5);
-      break;
-    case 3:
-      let opcionTres: number;
-      do {
-        console.log('\n=== GESTIÓN DE PACIENTES ===');
-        console.log('1. Agregar Paciente');
-        console.log('2. Modificar Paciente');
-        console.log('3. Eliminar Paciente');
-        console.log('4. Mostrar Pacientes');
-        console.log('5. Volver');
-        opcionTres = readlineSync.questionInt('Seleccione una opcion: ');
-        switch (opcionTres) {
-          case 1:
-            redVeterinaria.agregarPaciente();
-            break;
+function gestionVeterinariaElegida(veterinaria: Veterinaria) {
+  let opcion: number;
+  do {
+    console.log(`=== Veterinaria: ${veterinaria.getNombre()} ===`);
+    console.log('1. Gestionar Clientes');
+    console.log('2. Gestionar Pacientes');
+    console.log('3. Gestionar Proveedores');
+    console.log('4. Volver');
+    opcion = readlineSync.questionInt('Seleccione una opcion: ');
 
-          case 2:
-            redVeterinaria.modificarPaciente()
-            break;
+    switch (opcion) {
+      case 1:
+        gestionClientes(veterinaria);
+        break;
 
-          case 3:
-            redVeterinaria.eliminarPaciente();
-            break;
+      case 2:
+        gestionPacientes(veterinaria);
+        break;
 
-          case 4:
-            redVeterinaria.mostrarPacientes()
-            break;
+      case 3:
+        gestionProveedores(veterinaria);
+        break;
 
-          case 5:
-            console.log('Volviendo...');
-            break;
+      case 4:
+        console.log(`Volviendo...`);
+        mainMenu();
+        break;
 
-          default:
-            console.log('Opción inválida. Por favor intente nuevamente.');
-        }
-      } while (opcionTres !== 5);
-      break;
-    case 4:
-      let opcionCuatro: number;
-      do {
-        console.log('\n=== GESTIÓN DE PROVEEDORES ===');
-        console.log('1. Agregar Proveedor');
-        console.log('2. Modificar Proveedor');
-        console.log('3. Eliminar Proveedor');
-        console.log('4. Mostrar Proveedor');
-        console.log('5. Volver');
-        opcionCuatro = readlineSync.questionInt('Seleccione una opcion: ');
-        switch (opcionCuatro) {
-          case 1:
-            redVeterinaria.agregarProveedor();
-            break;
+      default:
+        console.log('Opción inválida. Por favor intente nuevamente.');
+        break;
+    }
+  } while (opcion !== 4);
+}
 
-          case 2:
-            redVeterinaria.modificarProveedor()
-            break;
+function gestionClientes(veterinaria: Veterinaria) {
+  let opcion: number;
+  do {
+    console.log(`=== Gestión de Clientes (${veterinaria.getNombre()}) ===`);
+    console.log('1. Agregar Cliente');
+    console.log('2. Modificar Cliente');
+    console.log('3. Eliminar Cliente');
+    console.log('4. Mostrar Clientes');
+    console.log('5. Volver');
+    opcion = readlineSync.questionInt('Seleccione una opcion: ');
+    switch (opcion) {
+      case 1:
+        veterinaria.agregarCliente()
+        break;
 
-          case 3:
-            redVeterinaria.eliminarProveedor();
-            break;
+      case 2:
+        veterinaria.modificarCliente()
+        break;
 
-          case 4:
-            redVeterinaria.mostrarProveedor()
-            break;
+      case 3:
+        veterinaria.eliminarCliente()
+        break;
 
-          case 5:
-            console.log('Volviendo...');
-            break;
+      case 4:
+        veterinaria.mostrarClientes()
+        break;
 
-          default:
-            console.log('Opción inválida. Por favor intente nuevamente.');
-        }
-      } while (opcionCuatro !== 5);
-    case 5:
-      console.log('Saliendo del sistema...');
-      break;
-    default:
-      console.log('Opción invalida. Por favor intente nuevamente.');
-  }
-} while (opcion !== 5);
+      case 5:
+        console.log('Volviendo...');
+        gestionVeterinariaElegida(veterinaria)
+        break;
+
+      default:
+        console.log('Opción inválida. Por favor intente nuevamente.');
+    }
+  } while (opcion !== 5);
+}
+
+function gestionPacientes(veterinaria: Veterinaria) {
+  let opcion: number;
+  do {
+    console.log(`=== Gestión de Pacientes (${veterinaria.getNombre()}) ===`);
+    console.log('1. Agregar Paciente');
+    console.log('2. Modificar Paciente');
+    console.log('3. Eliminar Paciente');
+    console.log('4. Mostrar Paciente');
+    console.log('5. Volver');
+    opcion = readlineSync.questionInt('Seleccione una opcion: ');
+    switch (opcion) {
+      case 1:
+        veterinaria.agregarPaciente()
+        break;
+
+      case 2:
+        veterinaria.modificarPaciente()
+        break;
+
+      case 3:
+        veterinaria.eliminarPaciente()
+        break;
+
+      case 4:
+        veterinaria.mostrarPacientes()
+        break;
+
+      case 5:
+        console.log('Volviendo...');
+        gestionVeterinariaElegida(veterinaria)
+        break;
+
+      default:
+        console.log('Opción inválida. Por favor intente nuevamente.');
+    }
+  } while (opcion !== 5);
+}
+
+function gestionProveedores(veterinaria: Veterinaria) {
+  let opcion: number;
+  do {
+    console.log(`=== Gestión de Proveedores (${veterinaria.getNombre()}) ===`);
+    console.log('1. Agregar Proveedores');
+    console.log('2. Modificar Proveedores');
+    console.log('3. Eliminar Proveedores');
+    console.log('4. Mostrar Proveedores');
+    console.log('5. Volver');
+    opcion = readlineSync.questionInt('Seleccione una opcion: ');
+    switch (opcion) {
+      case 1:
+        veterinaria.agregarProveedor()
+        break;
+
+      case 2:
+        veterinaria.modificarProveedor()
+        break;
+
+      case 3:
+        veterinaria.eliminarProveedor()
+        break;
+
+      case 4:
+        veterinaria.mostrarProveedores()
+        break;
+
+      case 5:
+        console.log('Volviendo...');
+        gestionVeterinariaElegida(veterinaria)
+        break;
+
+      default:
+        console.log('Opción inválida. Por favor intente nuevamente.');
+    }
+  } while (opcion !== 5);
+}
+
+mainMenu();

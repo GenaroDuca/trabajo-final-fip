@@ -1,23 +1,30 @@
+import { Cliente } from "./Cliente";
 import { EntidadBase } from "./EntidadBase";
 
 export class Paciente extends EntidadBase {
   private especie: string;
-  
-  constructor(nombre: string, especie: string, idDueno: number) {
+  private duenio: Cliente;
+
+  constructor(nombre: string, especie: string, duenio: Cliente) {
     super(nombre.toLowerCase());
     if (especie.toLowerCase() === `perro` || especie.toLowerCase() === `gato`) {
       this.especie = especie.toLowerCase();
     } else {
       this.especie = `exotica`;
     }
-    this.id = idDueno;
+    this.duenio = duenio;
+    this.id = duenio.getId();
   }
 
-  public getEspecie () :string {
+  public getEspecie(): string {
     return this.especie;
   }
 
-  public setEspecie (especie: string) :void {
+  public setEspecie(especie: string): void {
     this.especie = especie;
+  }
+
+  public getDuenio() {
+    return this.duenio;
   }
 }

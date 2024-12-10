@@ -1,13 +1,13 @@
-import { GeneradorId } from "./GeneradorId";
 
-export class EntidadBase extends GeneradorId {
+export class EntidadBase {
+    private static idsUsadas: number[] = []; //static para que sea unica independientemente de las instacias de las clases hijas de EntidadBase.ts
     protected id: number;
     protected nombre: string;
+    
 
     constructor(nombre: string) {
-        super ()
         this.nombre = nombre;
-        this.id = GeneradorId.generarId()
+        this.id = EntidadBase.generarId()
     }
 
     public getId(): number {
@@ -20,5 +20,15 @@ export class EntidadBase extends GeneradorId {
 
     public setNombre (nombre: string) : void {
         this.nombre = nombre;
+    }
+
+    public static generarId(): number {
+        let idNueva: number;
+        do {
+            idNueva = Math.floor(Math.random() * 1000000);
+
+        } while (this.idsUsadas.includes(idNueva));
+        this.idsUsadas.push(idNueva);
+        return idNueva;
     }
 }
