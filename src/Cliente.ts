@@ -20,6 +20,7 @@ export class Cliente extends EntidadBase {
 
     public setTelefono(telefono: number): void {
         this.telefono = telefono;
+      
     }
 
     public getEsVip() : boolean {

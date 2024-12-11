@@ -26,7 +26,20 @@ export class Veterinaria extends EntidadBase {
     //======= GESTION CLIENTES =======
     public agregarCliente(): void {
         const nombre = readlineSync.question(`Nombre: `);
-        const telefono = readlineSync.questionInt(`Telefono: `);
+
+        let telefono: number;
+        let telefonoValido = false; 
+
+        while (!telefonoValido) {
+            telefono = readlineSync.questionInt(`Telefono: `);
+            
+            if (this.verificarTelefono(telefono)) {
+                telefonoValido = true;
+            } else {
+                console.error("Número de teléfono inválido. Debe tener exactamente 10 dígitos. Inténtalo de nuevo.");
+            }
+        }
+
         const cliente: Cliente = new Cliente(nombre, telefono);
         this.clientes.push(cliente);
         console.log(`¡Cliente ${cliente.getNombre()} agregado con exito, su ID es: ${cliente.getId()}!`);
@@ -51,7 +64,20 @@ export class Veterinaria extends EntidadBase {
         }
 
         const nuevoNombre = readlineSync.question(`Nuevo nombre: `);
-        const nuevoTelefono = readlineSync.questionInt(`Nuevo Telefono: `);
+
+        let nuevoTelefono: number;
+        let telefonoValido = false; 
+        
+        while (!telefonoValido) {
+            nuevoTelefono = readlineSync.questionInt(`Nuevo Telefono: `);
+            
+            if (this.verificarTelefono(nuevoTelefono)) {
+                telefonoValido = true;
+            } else {
+                console.error("Número de teléfono inválido. Debe tener exactamente 10 dígitos. Inténtalo de nuevo.");
+            }
+        }
+
         cliente.setNombre(nuevoNombre);
         cliente.setTelefono(nuevoTelefono);
         console.log(`¡Cliente ${cliente.getNombre()}, ID: ${cliente.getId()} modificado con exito!`);
@@ -203,7 +229,20 @@ export class Veterinaria extends EntidadBase {
     //======= GESTION PROVEEDORES =======
     public agregarProveedor(): void {
         const nombre = readlineSync.question(`Nombre: `);
-        const telefono = readlineSync.questionInt(`Telefono: `);
+
+        let telefono: number;
+        let telefonoValido = false; 
+
+        while (!telefonoValido) {
+            telefono = readlineSync.questionInt(`Telefono: `);
+            
+            if (this.verificarTelefono(telefono)) {
+                telefonoValido = true;
+            } else {
+                console.error("Número de teléfono inválido. Debe tener exactamente 10 dígitos. Inténtalo de nuevo.");
+            }
+        }
+
         const proveedor: Proveedor = new Proveedor(nombre, telefono);
         this.proveedores.push(proveedor);
         console.log(`¡Proveedor ${proveedor.getNombre()} agregado con exito, su ID es: ${proveedor.getId()}!`);
@@ -227,7 +266,20 @@ export class Veterinaria extends EntidadBase {
             return;
         }
         const nuevoNombre = readlineSync.question(`Nuevo nombre: `);
-        const nuevoTelefono = readlineSync.questionInt(`Nuevo Telefono: `);
+
+        let nuevoTelefono: number;
+        let telefonoValido = false; 
+        
+        while (!telefonoValido) {
+            nuevoTelefono = readlineSync.questionInt(`Nuevo Telefono: `);
+            
+            if (this.verificarTelefono(nuevoTelefono)) {
+                telefonoValido = true;
+            } else {
+                console.error("Número de teléfono inválido. Debe tener exactamente 10 dígitos. Inténtalo de nuevo.");
+            }
+        }
+
         proveedor.setNombre(nuevoNombre);
         proveedor.setTelefono(nuevoTelefono);
         console.log(`¡Proveedor ${proveedor.getNombre()}, ID: ${proveedor.getId()} modificado con exito!`);

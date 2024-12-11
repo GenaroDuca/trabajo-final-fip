@@ -13,6 +13,6 @@ export class Proveedor extends EntidadBase {
     }
 
     public setTelefono(telefono: number): void {
-        this.telefono = telefono;
+            this.telefono = telefono;
     }
 }

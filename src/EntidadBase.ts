@@ -31,4 +31,9 @@ export class EntidadBase {
         this.idsUsadas.push(idNueva);
         return idNueva;
     }
+
+    public verificarTelefono(telefono: number): boolean {
+        const telefonoStr = telefono.toString();
+        return telefonoStr.length === 10 && !isNaN(Number(telefonoStr));
+    }
 }
