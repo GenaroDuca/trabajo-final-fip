@@ -3,7 +3,6 @@ export class EntidadBase {
     private static idsUsadas: number[] = []; //static para que sea unica independientemente de las instacias de las clases hijas de EntidadBase.ts
     protected id: number;
     protected nombre: string;
-    
 
     constructor(nombre: string) {
         this.nombre = nombre;

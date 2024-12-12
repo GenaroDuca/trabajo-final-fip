@@ -23,6 +23,10 @@ export class Veterinaria extends EntidadBase {
         this.direccion = direccion;
     }
 
+    public getClientes (): Cliente[] {
+        return this.clientes;
+    }
+
     //======= GESTION CLIENTES =======
     public agregarCliente(): void {
         const nombre = readlineSync.question(`Nombre: `);

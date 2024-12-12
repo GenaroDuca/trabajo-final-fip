@@ -123,7 +123,11 @@ function gestionClientes(veterinaria: Veterinaria) {
 }
 
 function gestionPacientes(veterinaria: Veterinaria) {
-  let opcion: number;
+  if (veterinaria.getClientes().length == 0) {
+    console.log(`¡Debe ingresar mínimo un cliente primero!`);
+    return;
+  } else {
+    let opcion: number;
   do {
     console.log(`=== Gestión de Pacientes (${veterinaria.getNombre()}) ===`);
     console.log('1. Agregar Paciente');
@@ -158,6 +162,8 @@ function gestionPacientes(veterinaria: Veterinaria) {
         console.log('Opción inválida. Por favor intente nuevamente.');
     }
   } while (opcion !== 5);
+  }
+  
 }
 
 function gestionProveedores(veterinaria: Veterinaria) {
