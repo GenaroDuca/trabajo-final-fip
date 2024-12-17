@@ -5,8 +5,8 @@ export class Paciente extends EntidadBase {
   private especie: string;
   private duenio: Cliente;
 
-  constructor(nombre: string, especie: string, duenio: Cliente) {
-    super(nombre.toLowerCase());
+  constructor(nombre: string, especie: string, duenio: Cliente, telefonoDuenio: number) {
+    super(nombre.toLowerCase(), telefonoDuenio);
     if (especie.toLowerCase() === `perro` || especie.toLowerCase() === `gato`) {
       this.especie = especie.toLowerCase();
     } else {

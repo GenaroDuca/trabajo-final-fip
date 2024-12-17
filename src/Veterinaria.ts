@@ -10,8 +10,8 @@ export class Veterinaria extends EntidadBase {
     private pacientes: Paciente[] = [];
     private proveedores: Proveedor[] = [];
 
-    constructor(nombre: string, direccion: string) {
-        super(nombre);
+    constructor(nombre: string, direccion: string, telefono: number) {
+        super(nombre.toLowerCase(), telefono);
         this.direccion = direccion.toLowerCase();
     }
 
@@ -29,7 +29,7 @@ export class Veterinaria extends EntidadBase {
 
     //======= GESTION CLIENTES =======
     public agregarCliente(): void {
-        const nombre = readlineSync.question(`Nombre: `);
+        let nombre = readlineSync.question(`Nombre: `);
 
         let telefono: number;
         let telefonoValido = false; 
@@ -44,7 +44,7 @@ export class Veterinaria extends EntidadBase {
             }
         }
 
-        const cliente: Cliente = new Cliente(nombre, telefono);
+        let cliente: Cliente = new Cliente(nombre, telefono);
         this.clientes.push(cliente);
         console.log(`¡Cliente ${cliente.getNombre()} agregado con exito, su ID es: ${cliente.getId()}!`);
     }
@@ -60,14 +60,14 @@ export class Veterinaria extends EntidadBase {
             return;
         }
 
-        const id = readlineSync.questionInt(`ID del cliente que deseas modificar: `);
-        const cliente = this.clientes.find(cliente => cliente.getId() === id);
+        let id = readlineSync.questionInt(`ID del cliente que deseas modificar: `);
+        let cliente = this.clientes.find(cliente => cliente.getId() === id);
         if (!cliente) {
             console.log(`¡ID no encontrada!`);
             return;
         }
 
-        const nuevoNombre = readlineSync.question(`Nuevo nombre: `);
+        let nuevoNombre = readlineSync.question(`Nuevo nombre: `);
 
         let nuevoTelefono: number;
         let telefonoValido = false; 
@@ -98,21 +98,21 @@ export class Veterinaria extends EntidadBase {
             return;
         }
 
-        const id = readlineSync.questionInt(`ID del cliente que deseas eliminar: `)
-        const cliente = this.clientes.find(cliente => cliente.getId() === id);
+        let id = readlineSync.questionInt(`ID del cliente que deseas eliminar: `)
+        let cliente = this.clientes.find(cliente => cliente.getId() === id);
         if (!cliente) {
             console.log(`¡ID no encontrada!`);
             return;
         }
 
-        this.clientes = this.clientes.filter(v => v.getId() !== id);
+        this.clientes = this.clientes.filter(cliente => cliente.getId() !== id);
         console.log(`¡Cliente ${cliente.getNombre()}, ID: ${cliente.getId()} eliminada con éxito!`);
     }
 
     public mostrarClientes(): void {
         console.log(`Listado de Clientes`)
         this.clientes.forEach(cliente => {
-            const mascotas = cliente.getMascotas().map(mascota => mascota.getNombre()).join(', ');
+            let mascotas = cliente.getMascotas().map(mascota => mascota.getNombre()).join(', ');
             console.log(`Cliente: "${cliente.getNombre()}". VIP: "${cliente.getEsVip()}". Telefono: ${cliente.getTelefono()} ID: ${cliente.getId()}. Mascotas: ${mascotas}`);
         });
     
@@ -123,17 +123,17 @@ export class Veterinaria extends EntidadBase {
 
     //======= GESTION PACIENTES =======
     public agregarPaciente(): void {
-        const nombre = readlineSync.question(`Nombre: `);
-        const especie = readlineSync.question("Especie: ");
-        const idDuenio = readlineSync.questionInt(`ID del duenio: `);
+        let nombre = readlineSync.question(`Nombre: `);
+        let especie = readlineSync.question("Especie: ");
+        let idDuenio = readlineSync.questionInt(`ID del duenio: `);
     
-        const duenio = this.clientes.find(cliente => cliente.getId() === idDuenio);
+        let duenio = this.clientes.find(cliente => cliente.getId() === idDuenio);
         if (!duenio) {
             console.log(`¡ID no encontrada!`);
             return;
         }
         duenio.incrementarVisitas();
-        const paciente: Paciente = new Paciente(nombre, especie, duenio);
+        let paciente: Paciente = new Paciente(nombre, especie, duenio, duenio.getTelefono());
         duenio.agregarMascota(paciente);
         this.pacientes.push(paciente);
         console.log(`¡Paciente ${paciente.getNombre()}, especie ${paciente.getEspecie()} agregado con exito, la ID de su duenio es: ${duenio.getId()}!`);
@@ -150,14 +150,14 @@ export class Veterinaria extends EntidadBase {
             return;
         }
 
-        const idDuenio = readlineSync.questionInt(`ID del dueño: `);
-        const duenio = this.clientes.find(cliente => cliente.getId() === idDuenio);
+        let idDuenio = readlineSync.questionInt(`ID del dueño: `);
+        let duenio = this.clientes.find(cliente => cliente.getId() === idDuenio);
         if (!duenio) {
             console.log(`¡ID de dueño no encontrada!`);
             return;
         }
 
-        const pacientesDuenio = this.pacientes.filter(paciente => paciente.getId() === idDuenio);
+        let pacientesDuenio = this.pacientes.filter(paciente => paciente.getId() === idDuenio);
         if (pacientesDuenio.length === 0) {
             console.log(`El dueño no tiene pacientes registrados.`);
             return;
@@ -166,15 +166,15 @@ export class Veterinaria extends EntidadBase {
         console.log(`Pacientes del dueño (ID: ${idDuenio}):`);
         pacientesDuenio.forEach(paciente => console.log(`ID: ${paciente.getId()} - Nombre: ${paciente.getNombre()}`));
 
-        const nombrePaciente = readlineSync.question(`Nombre del paciente a modificar: `);
-        const paciente = pacientesDuenio.find(paciente => paciente.getNombre() === nombrePaciente.toLowerCase());
+        let nombrePaciente = readlineSync.question(`Nombre del paciente a modificar: `);
+        let paciente = pacientesDuenio.find(paciente => paciente.getNombre() === nombrePaciente.toLowerCase());
         if (!paciente) {
             console.log(`¡Nombre del paciente no encontrado!`);
             return;
         }
 
-        const nuevoNombre = readlineSync.question(`Nuevo nombre: `);
-        const nuevaEspecie = readlineSync.question(`Nueva Especie: `);
+        let nuevoNombre = readlineSync.question(`Nuevo nombre: `);
+        let nuevaEspecie = readlineSync.question(`Nueva Especie: `);
         paciente.setNombre(nuevoNombre);
         paciente.setEspecie(nuevaEspecie);
         console.log(`¡Paciente ${paciente.getNombre()}, ${paciente.getEspecie()}, ID: ${paciente.getId()} modificado con exito!`);
@@ -191,14 +191,14 @@ export class Veterinaria extends EntidadBase {
             return;
         }
         
-        const idDuenio = readlineSync.questionInt(`ID del dueño: `);
-        const duenio = this.clientes.find(cliente => cliente.getId() === idDuenio);
+        let idDuenio = readlineSync.questionInt(`ID del dueño: `);
+        let duenio = this.clientes.find(cliente => cliente.getId() === idDuenio);
         if (!duenio) {
             console.log(`¡ID de duenio no encontrada!`);
             return;
         }
 
-        const pacientesDuenio = this.pacientes.filter(paciente => paciente.getId() === idDuenio);
+        let pacientesDuenio = this.pacientes.filter(paciente => paciente.getId() === idDuenio);
         if (pacientesDuenio.length === 0) {
             console.log(`El dueño no tiene pacientes registrados.`);
             return;
@@ -207,8 +207,8 @@ export class Veterinaria extends EntidadBase {
         console.log(`Pacientes del dueño (ID: ${idDuenio}):`);
         pacientesDuenio.forEach(paciente => console.log(`ID: ${paciente.getId()} - Nombre: ${paciente.getNombre()}`));
 
-        const nombrePaciente = readlineSync.question(`Nombre del paciente a eliminar: `);
-        const paciente = pacientesDuenio.find(paciente => paciente.getNombre() === nombrePaciente.toLowerCase());
+        let nombrePaciente = readlineSync.question(`Nombre del paciente a eliminar: `);
+        let paciente = pacientesDuenio.find(paciente => paciente.getNombre() === nombrePaciente.toLowerCase());
         if (!paciente) {
             console.log(`¡Nombre del paciente no encontrado!`);
             return;
@@ -221,7 +221,7 @@ export class Veterinaria extends EntidadBase {
     public mostrarPacientes(): void {
         console.log(`Listado de Pacientes`);
         this.pacientes.forEach(paciente => {
-            const duenio = paciente.getDuenio().getNombre();
+            let duenio = paciente.getDuenio().getNombre();
             console.log(`Paciente: "${paciente.getNombre()}". Especie: ${paciente.getEspecie()} ID de dueño: ${paciente.getId()} Dueño: ${duenio}`);
         });
     
@@ -232,7 +232,8 @@ export class Veterinaria extends EntidadBase {
 
     //======= GESTION PROVEEDORES =======
     public agregarProveedor(): void {
-        const nombre = readlineSync.question(`Nombre: `);
+        let nombre = readlineSync.question(`Nombre: `);
+        let suministro = readlineSync.question(`Suministro que provee: `);
 
         let telefono: number;
         let telefonoValido = false; 
@@ -247,7 +248,7 @@ export class Veterinaria extends EntidadBase {
             }
         }
 
-        const proveedor: Proveedor = new Proveedor(nombre, telefono);
+        let proveedor: Proveedor = new Proveedor(nombre, suministro, telefono);
         this.proveedores.push(proveedor);
         console.log(`¡Proveedor ${proveedor.getNombre()} agregado con exito, su ID es: ${proveedor.getId()}!`);
     }
@@ -255,7 +256,7 @@ export class Veterinaria extends EntidadBase {
     public modificarProveedor(): void {
         console.log(`Listado de Proveedores`); 
         this.proveedores.forEach(proveedor => {
-            console.log(`Proveedor: "${proveedor.getNombre()}". Telefono: ${proveedor.getTelefono()}. ID: ${proveedor.getId()}`)
+            console.log(`Proveedor: "${proveedor.getNombre()}". Telefono: ${proveedor.getTelefono()}. Suministro: ${proveedor.getSuministro()}. ID: ${proveedor.getId()}`)
         })
 
         if (this.proveedores.length == 0) {
@@ -263,13 +264,14 @@ export class Veterinaria extends EntidadBase {
             return;
         }
 
-        const id = readlineSync.questionInt(`ID del proveedor que deseas modificar: `);
-        const proveedor = this.proveedores.find(proveedor => proveedor.getId() === id);
+        let id = readlineSync.questionInt(`ID del proveedor que deseas modificar: `);
+        let proveedor = this.proveedores.find(proveedor => proveedor.getId() === id);
         if (!proveedor) {
             console.log(`¡ID no encontrada!`);
             return;
         }
-        const nuevoNombre = readlineSync.question(`Nuevo nombre: `);
+        let nuevoNombre = readlineSync.question(`Nuevo nombre: `);
+        let nuevoSuministro = readlineSync.question(`Nuevo suministro que provee: `);
 
         let nuevoTelefono: number;
         let telefonoValido = false; 
@@ -286,13 +288,14 @@ export class Veterinaria extends EntidadBase {
 
         proveedor.setNombre(nuevoNombre);
         proveedor.setTelefono(nuevoTelefono);
+        proveedor.setSuministro(nuevoSuministro)
         console.log(`¡Proveedor ${proveedor.getNombre()}, ID: ${proveedor.getId()} modificado con exito!`);
     }
 
     public eliminarProveedor(): void {
         console.log(`Listado de Proveedores`);
         this.proveedores.forEach(proveedor => {
-            console.log(`Proveedor: "${proveedor.getNombre()}". Telefono: ${proveedor.getTelefono()}. ID: ${proveedor.getId()}`)
+            console.log(`Proveedor: "${proveedor.getNombre()}". Telefono: ${proveedor.getTelefono()}. Suministro: ${proveedor.getSuministro()}. ID: ${proveedor.getId()}`)
         })
 
         if (this.proveedores.length == 0) {
@@ -300,21 +303,21 @@ export class Veterinaria extends EntidadBase {
             return;
         }
 
-        const id = readlineSync.questionInt(`ID de la veterinaria que deseas eliminar: `)
-        const proveedor = this.proveedores.find(proveedor => proveedor.getId() === id);
+        let id = readlineSync.questionInt(`ID de la veterinaria que deseas eliminar: `)
+        let proveedor = this.proveedores.find(proveedor => proveedor.getId() === id);
         if (!proveedor) {
             console.log(`¡ID no encontrada!`);
             return;
         }
 
-        this.clientes = this.clientes.filter(v => v.getId() !== id);
+        this.proveedores = this.proveedores.filter(proveedor => proveedor.getId() !== id);
         console.log(`¡Proveedor ${proveedor.getNombre()}, ID: ${proveedor.getId()} eliminado con éxito!`)
     }
 
     public mostrarProveedores(): void {
         console.log(`Listado de Proveedores`);
         this.proveedores.forEach(proveedor => {
-            console.log(`Proveedor: "${proveedor.getNombre()}". Telefono: ${proveedor.getTelefono()}. ID: ${proveedor.getId()}`)
+            console.log(`Proveedor: "${proveedor.getNombre()}". Telefono: ${proveedor.getTelefono()}. Suministro: ${proveedor.getSuministro()}. ID: ${proveedor.getId()}`)
         })
 
         if (this.proveedores.length == 0) {

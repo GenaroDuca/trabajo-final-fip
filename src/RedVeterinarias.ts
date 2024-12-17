@@ -8,18 +8,32 @@ export class redVeterinarias {
 
   //======= GESTION VETERINARIA =======
   public agregarVeterinaria(): Veterinaria {
-    const nombre = readlineSync.question(`Nombre: `)
-    const direccion = readlineSync.question(`Direccion: `)
-    const veterinaria: Veterinaria = new Veterinaria(nombre, direccion)
+    let nombre = readlineSync.question(`Nombre: `)
+    let direccion = readlineSync.question(`Direccion: `)
+
+    let telefono: number;
+    let telefonoValido = false;
+
+    while (!telefonoValido) {
+      telefono = readlineSync.questionInt(`Telefono: `);
+
+      if (this.verificarTelefono(telefono)) {
+        telefonoValido = true;
+      } else {
+        console.error("Número de teléfono inválido. Debe tener exactamente 10 dígitos. Inténtalo de nuevo.");
+      }
+    }
+
+    let veterinaria: Veterinaria = new Veterinaria(nombre, direccion, telefono)
     this.veterinarias.push(veterinaria);
     console.log(`¡Veterinaria ${veterinaria.getNombre()} agregada con exito, su ID es: ${veterinaria.getId()}!`);
     return veterinaria
   }
 
   public modificarVeterinaria(): void {
-    console.log (`Listado de Veterinarias:`)
+    console.log(`Listado de Veterinarias:`)
     this.veterinarias.forEach(vete => {
-      console.log(`Veterinaria: "${vete.getNombre()}". Dirección: "${vete.getDireccion()}". ID: ${vete.getId()}`)
+      console.log(`Veterinaria: "${vete.getNombre()}". Dirección: "${vete.getDireccion()}". Telefono: ${vete.getTelefono()}. ID: ${vete.getId()}`)
     })
 
     if (this.veterinarias.length == 0) {
@@ -27,15 +41,15 @@ export class redVeterinarias {
       return;
     }
 
-    const id = readlineSync.questionInt(`ID de la veterinaria que deseas modificar: `);
-    const veterinaria = this.veterinarias.find(vete => vete.getId() === id);
+    let id = readlineSync.questionInt(`ID de la veterinaria que deseas modificar: `);
+    let veterinaria = this.veterinarias.find(vete => vete.getId() === id);
     if (!veterinaria) {
       console.log(`¡ID no encontrada!`);
       return;
     }
 
-    const nuevoNombre = readlineSync.question(`Nuevo nombre: `);
-    const nuevaDireccion = readlineSync.question(`Nueva direccion: `);
+    let nuevoNombre = readlineSync.question(`Nuevo nombre: `);
+    let nuevaDireccion = readlineSync.question(`Nueva direccion: `);
 
     veterinaria.setNombre(nuevoNombre);
     veterinaria.setDireccion(nuevaDireccion);
@@ -43,9 +57,9 @@ export class redVeterinarias {
   }
 
   public eliminarVeterinaria(): void {
-    console.log (`Listado de Veterinarias:`)
+    console.log(`Listado de Veterinarias:`)
     this.veterinarias.forEach(vete => {
-      console.log(`Veterinaria: "${vete.getNombre()}". Dirección: "${vete.getDireccion()}". ID: ${vete.getId()}`)
+      console.log(`Veterinaria: "${vete.getNombre()}". Dirección: "${vete.getDireccion()}". Telefono: ${vete.getTelefono()}. ID: ${vete.getId()}`)
     })
 
     if (this.veterinarias.length == 0) {
@@ -53,8 +67,8 @@ export class redVeterinarias {
       return;
     }
 
-    const id = readlineSync.questionInt(`ID de la veterinaria que deseas eliminar: `)
-    const veterinaria = this.veterinarias.find(vete => vete.getId() === id);
+    let id = readlineSync.questionInt(`ID de la veterinaria que deseas eliminar: `)
+    let veterinaria = this.veterinarias.find(vete => vete.getId() === id);
     if (!veterinaria) {
       console.log(`¡ID no encontrada!`);
       return;
@@ -65,9 +79,9 @@ export class redVeterinarias {
   }
 
   public mostrarVeterinarias(): boolean {
-    console.log (`Listado de Veterinarias:`)
+    console.log(`Listado de Veterinarias:`)
     this.veterinarias.forEach(vete => {
-      console.log(`Veterinaria: "${vete.getNombre()}". Dirección: "${vete.getDireccion()}". ID: ${vete.getId()}`)
+      console.log(`Veterinaria: "${vete.getNombre()}". Dirección: "${vete.getDireccion()}". Telefono: ${vete.getTelefono()}. ID: ${vete.getId()}`)
     })
 
     if (this.veterinarias.length == 0) {
@@ -79,7 +93,7 @@ export class redVeterinarias {
   }
 
   public seleccionarVeterinaria(id: number): Veterinaria {
-    const veterinariaElegida = this.veterinarias.find(vete => vete.getId() === id);
+    let veterinariaElegida = this.veterinarias.find(vete => vete.getId() === id);
 
     if (veterinariaElegida) {
       console.log(`¡Veterinaria: ${veterinariaElegida.getNombre()} elegida correctamente!`)
@@ -87,5 +101,10 @@ export class redVeterinarias {
     } else {
       console.log(`¡ID no encontrada!`);
     }
+  }
+
+  public verificarTelefono(telefono: number): boolean {
+    let telefonoStr = telefono.toString();
+    return telefonoStr.length === 10 && !isNaN(Number(telefonoStr));
   }
 }

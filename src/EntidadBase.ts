@@ -3,21 +3,32 @@ export class EntidadBase {
     private static idsUsadas: number[] = []; //static para que sea unica independientemente de las instacias de las clases hijas de EntidadBase.ts
     protected id: number;
     protected nombre: string;
+    protected telefono: number;
 
-    constructor(nombre: string) {
+    constructor(nombre: string, telefono: number) {
         this.nombre = nombre;
+        this.telefono = telefono;
         this.id = EntidadBase.generarId()
+    }
+
+
+    public getTelefono(): number {
+        return this.telefono;
+    }
+
+    public setTelefono(telefono: number): void {
+        this.telefono = telefono;
     }
 
     public getId(): number {
         return this.id;
     }
 
-    public getNombre(): string {    
+    public getNombre(): string {
         return this.nombre;
     }
 
-    public setNombre (nombre: string) : void {
+    public setNombre(nombre: string): void {
         this.nombre = nombre;
     }
 
@@ -32,7 +43,7 @@ export class EntidadBase {
     }
 
     public verificarTelefono(telefono: number): boolean {
-        const telefonoStr = telefono.toString();
+        let telefonoStr = telefono.toString();
         return telefonoStr.length === 10 && !isNaN(Number(telefonoStr));
     }
 }

@@ -2,7 +2,7 @@ import * as readlineSync from 'readline-sync';
 import { redVeterinarias } from './RedVeterinarias';
 import { Veterinaria } from './Veterinaria';
 
-const redVeterinaria: redVeterinarias = new redVeterinarias();
+let redVeterinaria: redVeterinarias = new redVeterinarias();
 
 function mainMenu() {
   let opcion: number;
@@ -19,8 +19,8 @@ function mainMenu() {
     switch (opcion) {
       case 1:
         if (redVeterinaria.mostrarVeterinarias()) {
-          const idVeterinaria = readlineSync.questionInt("Seleccione una veterinaria con su ID: ");
-          const veterinariaGestionar = redVeterinaria.seleccionarVeterinaria(idVeterinaria);
+          let idVeterinaria = readlineSync.questionInt("Seleccione una veterinaria con su ID: ");
+          let veterinariaGestionar = redVeterinaria.seleccionarVeterinaria(idVeterinaria);
           if (veterinariaGestionar) {
             gestionVeterinariaElegida(veterinariaGestionar)
           }

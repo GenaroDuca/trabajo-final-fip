@@ -1,18 +1,18 @@
 import { EntidadBase } from "./EntidadBase";
 
 export class Proveedor extends EntidadBase {
-    private telefono: number;
+    private suministro: string;
 
-    constructor(nombre: string, telefono: number) {
-        super(nombre.toLowerCase());
-        this.telefono = telefono;
+    constructor(nombre: string, suministro: string, telefono: number) {
+        super(nombre.toLowerCase(), telefono);
+        this.suministro = suministro;
     }
 
-    public getTelefono(): number {
-        return this.telefono;
+    public getSuministro(): string {
+        return this.suministro;
     }
 
-    public setTelefono(telefono: number): void {
-            this.telefono = telefono;
+    public setSuministro(suministro: string): void {
+        this.suministro = suministro;
     }
 }
