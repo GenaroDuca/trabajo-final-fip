@@ -12,17 +12,18 @@ function mainMenu() {
     console.log('2. Agregar Veterinarias');
     console.log('3. Eliminar Veterinarias');
     console.log('4. Modificar Veterinarias');
-    console.log('5. Salir'); 3
+    console.log('5. Mostrar Veterinarias');
+    console.log('6. Salir'); 3
 
     opcion = readlineSync.questionInt('Seleccione una opcion: ');
 
     switch (opcion) {
       case 1:
-        if (redVeterinaria.mostrarVeterinarias()) {
-          let idVeterinaria = readlineSync.questionInt("Seleccione una veterinaria con su ID: ");
-          let veterinariaGestionar = redVeterinaria.seleccionarVeterinaria(idVeterinaria);
+        if (redVeterinaria.gestionarVeterinarias()) {
+          const idVeterinaria = readlineSync.questionInt("Seleccione una veterinaria con su ID: ");
+          const veterinariaGestionar = redVeterinaria.seleccionarVeterinaria(idVeterinaria);
           if (veterinariaGestionar) {
-            gestionVeterinariaElegida(veterinariaGestionar)
+            gestionVeterinariaElegida(veterinariaGestionar);
           }
         }
         break;
@@ -35,10 +36,14 @@ function mainMenu() {
         break;
 
       case 4:
-        redVeterinaria.modificarVeterinaria()
+        redVeterinaria.modificarVeterinaria();
         break;
 
       case 5:
+        redVeterinaria.mostrarVeterinarias();
+        break;
+
+      case 6:
         console.log('¡Hasta luego!');
         break;
 
@@ -46,7 +51,7 @@ function mainMenu() {
         console.log('Opción inválida. Por favor intente nuevamente.');
         break;
     }
-  } while (opcion !== 5);
+  } while (opcion !== 6);
 }
 
 function gestionVeterinariaElegida(veterinaria: Veterinaria) {

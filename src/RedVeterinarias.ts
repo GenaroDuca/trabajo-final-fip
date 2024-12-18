@@ -78,10 +78,10 @@ export class redVeterinarias {
     console.log(`¡Veterinaria ${veterinaria.getNombre()} eliminada con éxito!`)
   }
 
-  public mostrarVeterinarias(): boolean {
+  public gestionarVeterinarias(): boolean {
     console.log(`Listado de Veterinarias:`)
     this.veterinarias.forEach(vete => {
-      console.log(`Veterinaria: "${vete.getNombre()}". Dirección: "${vete.getDireccion()}". Telefono: ${vete.getTelefono()}. ID: ${vete.getId()}`)
+      console.log(`Veterinaria: "${vete.getNombre()}". Dirección: "${vete.getDireccion()}". ID: ${vete.getId()}\n     - Clientes: ${vete.getCantClientes()}. \n     - Pacientes: ${vete.getCantPacientes()}.\n     - Proveedores: ${vete.getCantProveedores()}.`)
     })
 
     if (this.veterinarias.length == 0) {
@@ -89,6 +89,18 @@ export class redVeterinarias {
       return false;
     } else {
       return true;
+    }
+  }
+
+  public mostrarVeterinarias(): void {
+    console.log(`Listado de Veterinarias:`)
+    this.veterinarias.forEach(vete => {
+      console.log(`Veterinaria: "${vete.getNombre()}". Dirección: "${vete.getDireccion()}". ID: ${vete.getId()}\n   Clientes: ${vete.getCantClientes()}. Pacientes: ${vete.getCantPacientes()}. Proveedores: ${vete.getCantProveedores()}.`)
+    })
+
+    if (this.veterinarias.length == 0) {
+      console.log("¡No hay veterinarias cargadas!")
+      return;
     }
   }
 

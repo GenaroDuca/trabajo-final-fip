@@ -26,6 +26,10 @@ export class Cliente extends EntidadBase {
         this.mascotas.push(mascota);
     }
 
+    public eliminarMascota(mascotaEliminar: Paciente): void {
+        this.mascotas = this.mascotas.filter((mascota: Paciente) => mascota !== mascotaEliminar);
+    }
+
     public getMascotas(): Paciente[] {
         return this.mascotas;
     }

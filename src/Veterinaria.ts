@@ -121,6 +121,10 @@ export class Veterinaria extends EntidadBase {
         }
     }
 
+    public getCantClientes(): number {
+        return this.clientes.length;
+    }
+
     //======= GESTION PACIENTES =======
     public agregarPaciente(): void {
         let nombre = readlineSync.question(`Nombre: `);
@@ -191,7 +195,7 @@ export class Veterinaria extends EntidadBase {
             return;
         }
         
-        let idDuenio = readlineSync.questionInt(`ID del dueño: `);
+        let idDuenio = readlineSync.questionInt(`ID del duenio: `);
         let duenio = this.clientes.find(cliente => cliente.getId() === idDuenio);
         if (!duenio) {
             console.log(`¡ID de duenio no encontrada!`);
@@ -200,7 +204,7 @@ export class Veterinaria extends EntidadBase {
 
         let pacientesDuenio = this.pacientes.filter(paciente => paciente.getId() === idDuenio);
         if (pacientesDuenio.length === 0) {
-            console.log(`El dueño no tiene pacientes registrados.`);
+            console.log(`El duenio no tiene pacientes registrados.`);
             return;
         }
 
@@ -214,6 +218,7 @@ export class Veterinaria extends EntidadBase {
             return;
         }
 
+        duenio.eliminarMascota(paciente);
         this.pacientes = this.pacientes.filter(paciente => paciente.getNombre() !== nombrePaciente);
         console.log(`¡Paciente ${paciente.getNombre()}, ${paciente.getEspecie()}, ID: ${paciente.getId()} eliminada con éxito!`);
     }
@@ -228,6 +233,10 @@ export class Veterinaria extends EntidadBase {
         if (this.pacientes.length == 0) {
             console.log("¡No hay pacientes cargados!");
         }
+    }
+
+    public getCantPacientes(): number {
+        return this.pacientes.length;
     }
 
     //======= GESTION PROVEEDORES =======
@@ -324,5 +333,9 @@ export class Veterinaria extends EntidadBase {
             console.log("¡No hay proveedores cargados!")
             return;
         }
+    }
+
+    public getCantProveedores(): number {
+        return this.proveedores.length;
     }
 }

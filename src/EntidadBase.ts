@@ -29,7 +29,7 @@ export class EntidadBase {
     }
 
     public setNombre(nombre: string): void {
-        this.nombre = nombre;
+        this.nombre = nombre.toLowerCase();
     }
 
     public static generarId(): number {

@@ -21,7 +21,7 @@ export class Paciente extends EntidadBase {
   }
 
   public setEspecie(especie: string): void {
-    this.especie = especie;
+    this.especie = especie.toLowerCase();
   }
 
   public getDuenio() {
