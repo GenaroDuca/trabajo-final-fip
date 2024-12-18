@@ -24,7 +24,7 @@ export class Paciente extends EntidadBase {
     this.especie = especie.toLowerCase();
   }
 
-  public getDuenio() {
+  public getDuenio():Cliente {
     return this.duenio;
   }
 }
